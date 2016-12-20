@@ -27,6 +27,8 @@ public class UdateDeleteServletEvent extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		  String idEvento=request.getParameter("idEvento");
+		  
+		  //qui cancelliamo l'evento dal database
 	        System.out.println("id evento="+idEvento );
 
 		 
@@ -43,7 +45,10 @@ public class UdateDeleteServletEvent extends HttpServlet {
 	        String start=req.getParameter("start");
 	        String idEvento=req.getParameter("idEvento");
 	        System.out.println("id evento="+idEvento+" titolo nuovo="+title );
-		
+	            
+	        //1- prima prendere l' evento con questo idEvento dal DB
+	        //2- settare i nuovi valori (title,start,fine) 
+	        // 3- chiamare un metodo agiiornaEvento dentro DB
 	}
 	
 	

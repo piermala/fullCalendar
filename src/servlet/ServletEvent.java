@@ -22,11 +22,12 @@ import com.google.gson.Gson;
 @WebServlet("/ServletEvent")
 public class ServletEvent extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       private List<CalendarDTO> l = new ArrayList<CalendarDTO>();
+     
+       private int id;
  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+		  List<CalendarDTO> l = new ArrayList<CalendarDTO>();
 		 
 		 CalendarDTO c = new CalendarDTO();
 		 c.setId("1");
@@ -46,11 +47,7 @@ public class ServletEvent extends HttpServlet {
 		 response.setContentType("application/json");
 		 response.setCharacterEncoding("UTF-8");
 		 PrintWriter out = response.getWriter();
-		 out.write(new Gson().toJson(l));		
-		
-
-		 
-		
+		 out.write(new Gson().toJson(l));
 	
 	}
 	
@@ -65,24 +62,28 @@ public class ServletEvent extends HttpServlet {
 		        
 		       // converto mili secondi to yyyy-mm-dd
 		        Date fine= new Date(Long.parseLong(start));
-		        Date Inizio= new Date(Long.parseLong(start));
+		        Date inizio= new Date(Long.parseLong(start));
 
+		      //  id++;
 		        
 		        CalendarDTO c=new CalendarDTO();
 		         c.setEnd(fine.toString());
-		         c.setStart(Inizio.toString());
+		         c.setStart(inizio.toString());
 		         c.setTitle(title);
 		         c.setColor("");
-		         c.setId("3"); 
+		        // c.setId(String.valueOf(id)); 
 		         
-	
+	            
 		       //  l.add(c);
 		        
-		         PrintWriter out = resp.getWriter();
-				 out.write("3");
+		       //  PrintWriter out = resp.getWriter();
+				// out.write("3");
 				 
 				// System.out.println(jsonFeedback);
 			  
+		         
+		         
+		         /// qui salviamo nel database
 			  /// aggiungi evento
 //			  EventoDAO eDao = new EventoDAO();
 //			  eDao.aggiungiEvento(c);

@@ -53,8 +53,9 @@
 			
 			<!-- DIV DA CUI PRENDERE L'ID CLIENTE -->
 			<div id="idCliente" class="hidden">avf</div>
-			<div id="idvsfdf" class="hidden">Road</div>
-			<div id="id2fdfd" class="hidden">desk</div>
+			<div id="idProssimo" class="hidden">3</div>
+		
+			
 			
 
 			
@@ -165,7 +166,9 @@
 
 	/* initialize the calendar
 	-----------------------------------------------------------------*/
-	var idGenerato; 
+	/// prossimo id
+	var idGenerato = parseInt(document.getElementById("idProssimo").textContent);
+	
 	var date = new Date();
 	var d = date.getDate();
 	var m = date.getMonth();
@@ -184,6 +187,7 @@
 			center: 'title',
 			right: 'month'
 		},
+		/// questo prende gli eventi dal servlet
 		events: '/Calendario/ServletEvent'
        ,
 		
@@ -219,24 +223,29 @@
 		,
 		selectable: true,
 		selectHelper: true,
+		/// creazione nuovo evento
 		select: function(start, end, allDay) {
 			
 			bootbox.prompt("New Event Title:", function(title) {
 				
 				if (title !== null && title) {
 					
-					
+					/// mandare i dati del nuovo evento al servlet
 					$.ajax({
 						   url: '/Calendario/ServletEvent',
 						   data: 'title='+ title+'&start='+ start+'&idCliente='+ idCliente ,
 						   type: "POST",
 						   success: function(data,txtStatus,jqXHR){
 								  /// se tutto va bene e riceviamo i dati dal server
-								 
+								// alert(data);
+								  
 								  if(data){
 								
-								idGenerato=data; 
-								// alert(idGenerato);
+								
+								
+									  idGenerato++;
+									// alert(idGenerato);
+									
 								  }
 								  
 								  
@@ -255,8 +264,6 @@
 							end: end,
 							allDay: allDay,
 							className: 'label-info',
-							
-					
 						},
 						true // make the event "stick"
 					);
@@ -302,6 +309,7 @@
 				calEvent.title = $(this).find("input[type=text]").val();   /// qui modifica il titolo dell'evento
 				
 				///ajax
+				/// qui manda i dati dell'evento per aggiornarlo
 				$.ajax({
 						   url: '/Calendario/UdateDeleteServletEvent',
 						   data: 'title='+ calEvent.title +'&start='+ calEvent.start+'&idCliente='+ idCliente+ '&idEvento=' + calEvent._id,
@@ -316,6 +324,7 @@
 			});
 			modal.find('button[data-action=delete]').on('click', function() {
 				
+				///  qui manda l'id dell'evento per cancellarlo 
 				$.ajax({
 					   url: '/Calendario/UdateDeleteServletEvent',
 					   data: 'idEvento=' + calEvent._id,
